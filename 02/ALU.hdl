@@ -43,130 +43,84 @@ CHIP ALU {
 
     PARTS:
     // Put you code here:
+    And16(a=x, b=notX, out=zero);
 
-    // Calculate final x
-    Not(in=zx, out=notZX);
+    // Zero the x
+    Not16(in=x, out=notX);
+    Mux16(
+    a=x,
+    b=zero,
+    sel=zx,
+    out=x1
+    );
 
-    And(a=x[0], b=notZX, out=x1[0]);
-    And(a=x[1], b=notZX, out=x1[1]);
-    And(a=x[2], b=notZX, out=x1[2]);
-    And(a=x[3], b=notZX, out=x1[3]);
-    And(a=x[4], b=notZX, out=x1[4]);
-    And(a=x[5], b=notZX, out=x1[5]);
-    And(a=x[6], b=notZX, out=x1[6]);
-    And(a=x[7], b=notZX, out=x1[7]);
-    And(a=x[8], b=notZX, out=x1[8]);
-    And(a=x[9], b=notZX, out=x1[9]);
-    And(a=x[10], b=notZX, out=x1[10]);
-    And(a=x[11], b=notZX, out=x1[11]);
-    And(a=x[12], b=notZX, out=x1[12]);
-    And(a=x[13], b=notZX, out=x1[13]);
-    And(a=x[14], b=notZX, out=x1[14]);
-    And(a=x[15], b=notZX, out=x1[15]);
+    // Negate x
+    Not16(in=x1, out=notX1);
+    Mux16(
+    a=x1,
+    b=notX1,
+    sel=nx,
+    out=finalX
+    );
 
-    Not(in=nx, out=notNX)
-    Not16(in=x1, out=notX1)
+    // Do not negate if x is zero
 
-    And(a=x1[0], b=notNX, out=xNX[0]);
-    And(a=x1[1], b=notNX, out=xNX[1]);
-    And(a=x1[2], b=notNX, out=xNX[2]);
-    And(a=x1[3], b=notNX, out=xNX[3]);
-    And(a=x1[4], b=notNX, out=xNX[4]);
-    And(a=x1[5], b=notNX, out=xNX[5]);
-    And(a=x1[6], b=notNX, out=xNX[6]);
-    And(a=x1[7], b=notNX, out=xNX[7]);
-    And(a=x1[8], b=notNX, out=xNX[8]);
-    And(a=x1[9], b=notNX, out=xNX[9]);
-    And(a=x1[10], b=notNX, out=xNX[10]);
-    And(a=x1[11], b=notNX, out=xNX[11]);
-    And(a=x1[12], b=notNX, out=xNX[12]);
-    And(a=x1[13], b=notNX, out=xNX[13]);
-    And(a=x1[14], b=notNX, out=xNX[14]);
-    And(a=x1[15], b=notNX, out=xNX[15]);
 
-    And(a=notX1[0], b=nx, out=xnotNX[0]);
-    And(a=notX1[1], b=nx, out=xnotNX[1]);
-    And(a=notX1[2], b=nx, out=xnotNX[2]);
-    And(a=notX1[3], b=nx, out=xnotNX[3]);
-    And(a=notX1[4], b=nx, out=xnotNX[4]);
-    And(a=notX1[5], b=nx, out=xnotNX[5]);
-    And(a=notX1[6], b=nx, out=xnotNX[6]);
-    And(a=notX1[7], b=nx, out=xnotNX[7]);
-    And(a=notX1[8], b=nx, out=xnotNX[8]);
-    And(a=notX1[9], b=nx, out=xnotNX[9]);
-    And(a=notX1[10], b=nx, out=xnotNX[10]);
-    And(a=notX1[11], b=nx, out=xnotNX[11]);
-    And(a=notX1[12], b=nx, out=xnotNX[12]);
-    And(a=notX1[13], b=nx, out=xnotNX[13]);
-    And(a=notX1[14], b=nx, out=xnotNX[14]);
-    And(a=notX1[15], b=nx, out=xnotNX[15]);
+    // Zero the y
+    Not16(in=y, out=notY);
+    Mux16(a=y, b=zero, sel=zy, out=y1);
 
-    Or16(a=xNX, b=xnotNX, out=finalX);
+    // Negate y
+    Not16(in=y1, out=notY1);
+    Mux16(a=y1, b=notY1, sel=ny, out=finalY);
 
-    // Calculate final y
-    Not(in=zy, out=notZY);
-
-    And(a=y[0], b=notZY, out=y1[0]);
-    And(a=y[1], b=notZY, out=y1[1]);
-    And(a=y[2], b=notZY, out=y1[2]);
-    And(a=y[3], b=notZY, out=y1[3]);
-    And(a=y[4], b=notZY, out=y1[4]);
-    And(a=y[5], b=notZY, out=y1[5]);
-    And(a=y[6], b=notZY, out=y1[6]);
-    And(a=y[7], b=notZY, out=y1[7]);
-    And(a=y[8], b=notZY, out=y1[8]);
-    And(a=y[9], b=notZY, out=y1[9]);
-    And(a=y[10], b=notZY, out=y1[10]);
-    And(a=y[11], b=notZY, out=y1[11]);
-    And(a=y[12], b=notZY, out=y1[12]);
-    And(a=y[13], b=notZY, out=y1[13]);
-    And(a=y[14], b=notZY, out=y1[14]);
-    And(a=y[15], b=notZY, out=y1[15]);
-
-    Not(in=ny, out=notNY)
-    Not16(in=y1, out=notY1)
-
-    And(a=y1[0], b=notNY, out=yNY[0]);
-    And(a=y1[1], b=notNY, out=yNY[1]);
-    And(a=y1[2], b=notNY, out=yNY[2]);
-    And(a=y1[3], b=notNY, out=yNY[3]);
-    And(a=y1[4], b=notNY, out=yNY[4]);
-    And(a=y1[5], b=notNY, out=yNY[5]);
-    And(a=y1[6], b=notNY, out=yNY[6]);
-    And(a=y1[7], b=notNY, out=yNY[7]);
-    And(a=y1[8], b=notNY, out=yNY[8]);
-    And(a=y1[9], b=notNY, out=yNY[9]);
-    And(a=y1[10], b=notNY, out=yNY[10]);
-    And(a=y1[11], b=notNY, out=yNY[11]);
-    And(a=y1[12], b=notNY, out=yNY[12]);
-    And(a=y1[13], b=notNY, out=yNY[13]);
-    And(a=y1[14], b=notNY, out=yNY[14]);
-    And(a=y1[15], b=notNY, out=yNY[15]);
-
-    And(a=notY1[0], b=ny, out=ynotNY[0]);
-    And(a=notY1[1], b=ny, out=ynotNY[1]);
-    And(a=notY1[2], b=ny, out=ynotNY[2]);
-    And(a=notY1[3], b=ny, out=ynotNY[3]);
-    And(a=notY1[4], b=ny, out=ynotNY[4]);
-    And(a=notY1[5], b=ny, out=ynotNY[5]);
-    And(a=notY1[6], b=ny, out=ynotNY[6]);
-    And(a=notY1[7], b=ny, out=ynotNY[7]);
-    And(a=notY1[8], b=ny, out=ynotNY[8]);
-    And(a=notY1[9], b=ny, out=ynotNY[9]);
-    And(a=notY1[10], b=ny, out=ynotNY[10]);
-    And(a=notY1[11], b=ny, out=ynotNY[11]);
-    And(a=notY1[12], b=ny, out=ynotNY[12]);
-    And(a=notY1[13], b=ny, out=ynotNY[13]);
-    And(a=notY1[14], b=ny, out=ynotNY[14]);
-    And(a=notY1[15], b=ny, out=ynotNY[15]);
-
-    Or16(a=yNy, b=ynotNY, out=finalY);
-
-    Add16(a=finalX, b=finalY, out=sumOut1);
-    And16(a=finalX, b=finalY, out=andOut1);
-
-    Not(in=f, out=notF);
 
     // Check for f to see which output to take
-    
+    Add16(a=finalX, b=finalY, out=outSum);
+    And16(a=finalX, b=finalY, out=outAnd);
+
+    Mux16(a=outAnd, b=outSum, sel=f, out=out1);
+    Not16(in=out1, out=notOut1);
+
+    Mux16(
+    a=out1,
+    b=notOut1,
+    sel=no,
+    out=out,
+    out[15]=ng,
+    out[15]=out15,
+    out[14]=out14,
+    out[13]=out13,
+    out[12]=out12,
+    out[11]=out11,
+    out[10]=out10,
+    out[9]=out9,
+    out[8]=out8,
+    out[7]=out7,
+    out[6]=out6,
+    out[5]=out5,
+    out[4]=out4,
+    out[3]=out3,
+    out[2]=out2,
+    out[1]=out1A,
+    out[0]=out0
+    );
+
+    Or(a=out15, b=out14, out=outA);
+    Or(a=outA, b=out13, out=outB);
+    Or(a=outB, b=out12, out=outC);
+    Or(a=outC, b=out11, out=outD);
+    Or(a=outD, b=out10, out=outE);
+    Or(a=outE, b=out9, out=outF);
+    Or(a=outF, b=out8, out=outG);
+    Or(a=outG, b=out7, out=outH);
+    Or(a=outH, b=out6, out=outI);
+    Or(a=outI, b=out5, out=outJ);
+    Or(a=outJ, b=out4, out=outK);
+    Or(a=outK, b=out3, out=outL);
+    Or(a=outL, b=out2, out=outM);
+    Or(a=outM, b=out1A, out=outN);
+    Or(a=outN, b=out0, out=outO);
+
+    Not(in=outO, out=zr);
 }
